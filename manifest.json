@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "Carbon Visualizer Extension",
+    "version": "1.0.0",
+    "description": "A browser extension that assesses web page carbon emissions using the Lighthouse API and CO2.js API.",
+    "permissions": [
+        "activeTab"
+    ],
+    "devtools_page": "devtools.html",
+    "action": {
+        "default_title": "Carbon Visualizer Extension",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    }
+}
