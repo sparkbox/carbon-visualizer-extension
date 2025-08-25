@@ -1,29 +1,28 @@
 {
-    "name": "carbon-visualizer-extension",
-    "version": "1.0.0",
-    "description": "A browser extension that assesses web page carbon emissions using the Lighthouse API and CO2.js API.",
-    "main": "devtools.js",
-    "scripts": {
-        "test": "echo 'Tests will be implemented by teams'",
-        "build": "echo 'Build process will be implemented by teams'"
-    },
-    "keywords": [
-        "browser-extension",
-        "devtools",
-        "carbon-visualizer",
-        "team-exercise",
-        "chrome-extension",
-        "firefox-extension"
-    ],
-    "author": "Development Teams",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sparkbox/carbon-visualizer-extension.git"
-    },
-    "engines": {
-        "node": ">=14.0.0"
-    },
-    "devDependencies": {},
-    "dependencies": {}
+  "name": "carbon-visualizer-extension",
+  "version": "1.0.0",
+  "description": "A production-ready browser extension that assesses web page carbon emissions using Lighthouse and CO2.js APIs",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "browser-extension",
+    "carbon-footprint",
+    "lighthouse",
+    "co2js",
+    "chrome-extension",
+    "firefox-extension",
+    "sustainability",
+    "web-performance"
+  ],
+  "author": "Carbon Visualizer Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "archiver": "^5.3.1"
+  },
+  "devDependencies": {}
 }

@@ -1,0 +1,64 @@
+/* Core styles for Carbon Visualizer extension */
+
+.carbon-visualizer-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18.75rem;
+  height: 100vh;
+  z-index: 999999;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  box-shadow: 0.125rem 0 0.625rem rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+}
+
+.carbon-visualizer-panel--visible {
+  transform: translateX(0);
+}
+
+/* Panel variants */
+.carbon-visualizer-panel--welcome {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+}
+
+/* Panel header */
+.carbon-visualizer-panel__header {
+  padding: 1rem 1.5rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.carbon-visualizer-panel__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Panel content */
+.carbon-visualizer-panel__content {
+  padding: 1.5rem;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .carbon-visualizer-panel {
+    width: 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .carbon-visualizer-panel {
+    border: 2px solid #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .carbon-visualizer-panel {
+    transition: none;
+  }
+}
