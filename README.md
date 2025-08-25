@@ -2,7 +2,7 @@
 
 A browser extension that assesses web page carbon emissions using the Lighthouse API and CO2.js API.
 
-## 🏗️ **Project Structure**
+## **Project Structure**
 ```
 carbon-visualizer-extension/
 ├── manifest.json              # Chrome/Edge manifest (Manifest V3)
