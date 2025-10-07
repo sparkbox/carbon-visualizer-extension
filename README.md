@@ -7,7 +7,6 @@ A production-ready browser extension that will assess web page carbon emissions 
 - **Modern Architecture**: Modular ES6 class-based design with clean separation of concerns
 - **Cross-Browser Support**: Works seamlessly on Chrome and Firefox (Manifest V3)
 - **Smooth Animations**: Professional slide-in/out panel with CSS transitions
-- **Robust Toggle System**: Debounced clicks with concurrency protection
 - **Accessible Design**: WCAG-compliant interface with proper focus management
 - **Production Ready**: Clean code with no debug output and comprehensive error handling
 
@@ -86,7 +85,7 @@ This creates:
 ```
 carbon-visualizer-extension/
 ├── manifest.json              # Unified manifest for both browsers (Manifest V3)
-├── background.js              # Cross-browser background script with debouncing
+├── background.js              # Cross-browser background script
 ├── content.js                 # Content script loader with duplicate prevention
 ├── build.js                   # Build script for both browsers
 ├── src/                       # Source code directory
@@ -122,7 +121,6 @@ carbon-visualizer-extension/
 - **Modular Panels**: Each panel (welcome, loading, results) has its own HTML/CSS/JS files
 
 ### **Robust Toggle System**
-- **Debouncing**: Prevents rapid clicks (500ms ExtensionManager, 800ms background)
 - **Concurrency Control**: Prevents multiple simultaneous toggle operations
 - **State Management**: DOM-based detection with cleanup-first approach
 - **Error Handling**: Graceful fallbacks with silent error handling

@@ -16,7 +16,7 @@ class Panel {
         cssFile: 'src/panels/welcome/welcome.css',
         jsFile: 'src/panels/welcome/welcome.js',
         containerId: 'carbon-visualizer-welcome-panel',
-        className: 'carbon-visualizer-panel--welcome'
+        className: 'cv-panel--welcome'
       }
     };
     
@@ -27,7 +27,7 @@ class Panel {
     // Create container (or recreate if it was removed)
     this.container = document.createElement('div');
     this.container.id = this.config.containerId;
-    this.container.className = `carbon-visualizer-panel ${this.config.className}`;
+    this.container.className = `cv-panel ${this.config.className}`;
     
     // Reset visibility state
     this.isVisible = false;
@@ -53,7 +53,7 @@ class Panel {
       style.textContent = css;
       document.head.appendChild(style);
     } catch (error) {
-      // Silently handle CSS loading errors
+      console.error(error);
     }
   }
 
@@ -105,6 +105,7 @@ class Panel {
         module.default(this.type, panelData);
       }
     } catch (error) {
+      console.error(error);
     }
   }
 
@@ -131,10 +132,10 @@ class Panel {
 
   getFallbackHTML() {
     return `
-      <header class="carbon-visualizer-panel__header">
-        <h2 class="carbon-visualizer-panel__title">Carbon Visualizer - ${this.type}</h2>
+      <header class="cv-panel__header">
+        <h2 class="cv-panel__title">Carbon Visualizer - ${this.type}</h2>
       </header>
-      <main class="carbon-visualizer-panel__content">
+      <main class="cv-panel__content">
         <p>Panel content for ${this.type}</p>
         <p>Error loading panel files. Using fallback.</p>
       </main>
@@ -150,14 +151,14 @@ class Panel {
     document.body.appendChild(this.container);
     
     // Start hidden for animation
-    this.container.classList.remove('carbon-visualizer-panel--visible');
+    this.container.classList.remove('cv-panel--visible');
     
     // Force reflow
     this.container.offsetHeight;
     
     // Animate in
     requestAnimationFrame(() => {
-      this.container.classList.add('carbon-visualizer-panel--visible');
+      this.container.classList.add('cv-panel--visible');
     });
     
     this.isVisible = true;
@@ -175,7 +176,7 @@ class Panel {
         return;
       }
 
-      this.container.classList.remove('carbon-visualizer-panel--visible');
+      this.container.classList.remove('cv-panel--visible');
       
       // Set isVisible to false immediately so toggle logic works
       this.isVisible = false;

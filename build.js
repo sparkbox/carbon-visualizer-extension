@@ -82,6 +82,25 @@ function copyManifests() {
   fs.copyFileSync('manifest.json', path.join(firefoxDir, 'manifest.json'));
 }
 
+// Patch Firefox manifest for browser-specific settings
+function patchFirefoxManifest() {
+  const firefoxManifestPath = path.join(firefoxDir, 'manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(firefoxManifestPath, 'utf-8'));
+
+  // Change service_worker to scripts for background
+  manifest.background.scripts = [manifest.background.service_worker];
+  delete manifest.background.service_worker;
+
+  // Add browser-specific settings for Firefox
+  manifest.browser_specific_settings = {
+    gecko: {
+      "id": "carbon-visualizer@heysparkbox.com"
+    }
+  };
+
+  fs.writeFileSync(firefoxManifestPath, JSON.stringify(manifest, null, 2));
+}
+
 // Create ZIP files
 function createZips() {
   return new Promise((resolve, reject) => {
@@ -126,6 +145,7 @@ async function build() {
     createDirectories();
     copyCommonFiles();
     copyManifests();
+    patchFirefoxManifest();
     
     await createZips();
     

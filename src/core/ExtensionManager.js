@@ -16,12 +16,13 @@ class ExtensionManager {
       return;
     }
     
+    // Handle the message and send response
     if (!this.messageListenerAdded) {
       this.messageListenerAdded = true;
       this.browserAPI.runtime.onMessage.addListener((message, sender, sendResponse) => {
         this.handleMessage(message, sender, sendResponse);
-        sendResponse({ received: true }); 
-        return false; 
+        sendResponse({ received: true }); // Send a response to close the channel
+        return false; // Don't keep channel open
       });
     }
 
@@ -47,6 +48,7 @@ class ExtensionManager {
           break;
       }
     } catch (error) {
+      console.error(error);
     }
   }
 
@@ -63,6 +65,7 @@ class ExtensionManager {
       style.textContent = css;
       document.head.appendChild(style);
     } catch (error) {
+      console.error(error);
     }
   }
 
@@ -81,11 +84,14 @@ class ExtensionManager {
     this.lastToggleTime = now;
     
     try {
-      const existingPanelInDOM = document.querySelector('.carbon-visualizer-panel--welcome');
+      const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
       
       if (existingPanelInDOM) {
-
-        existingPanelInDOM.remove();
+        existingPanelInDOM.classList.remove('cv-panel--visible');
+        // exit animation completes and then remove panel from DOM
+        setTimeout(() => {
+          existingPanelInDOM.remove();
+        }, 300);
       } else {
         await this.openPanel(panelType);
       }
@@ -99,7 +105,7 @@ class ExtensionManager {
 
   cleanupOrphanedPanels() {
     // Remove any orphaned panels from DOM
-    const orphanedPanels = document.querySelectorAll('.carbon-visualizer-panel');
+    const orphanedPanels = document.querySelectorAll('.cv-panel');
     orphanedPanels.forEach(panel => {
       panel.remove();
     });
@@ -146,7 +152,7 @@ class ExtensionManager {
     this.panels.clear();
     
     // Also remove any orphaned panels from DOM
-    const existingPanels = document.querySelectorAll('.carbon-visualizer-panel');
+    const existingPanels = document.querySelectorAll('.cv-panel');
     existingPanels.forEach(panel => {
       panel.remove();
     });
