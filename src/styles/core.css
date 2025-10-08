@@ -1,6 +1,30 @@
 /* Core styles for Carbon Visualizer extension */
 
-.carbon-visualizer-panel {
+/* TODO: these green values were generated using https://oklchroma.utilitybend.com/ and are not part of any design specs.
+ * The custom properties are used in this file and welcome.css.
+ * Feel free to remove them in favor of our own color palette!
+ */
+:root {
+  /* greens */
+  --cv-primary-green: hsl(114deg 64.9% 32.0%);
+  --cv-primary-green-base: 0.05;
+  --cv-primary-green-10: oklch(from var(--cv-primary-green) 10% calc(var(--cv-primary-green-base) + (sin(1.0 * pi) * c)) h);
+  --cv-primary-green-20: oklch(from var(--cv-primary-green) 20% calc(var(--cv-primary-green-base) + (sin(0.9 * pi) * c)) h);
+  --cv-primary-green-30: oklch(from var(--cv-primary-green) 30% calc(var(--cv-primary-green-base) + (sin(0.8 * pi) * c)) h);
+  --cv-primary-green-40: oklch(from var(--cv-primary-green) 40% calc(var(--cv-primary-green-base) + (sin(0.7 * pi) * c)) h);
+  --cv-primary-green-50: oklch(from var(--cv-primary-green) 50% calc(var(--cv-primary-green-base) + (sin(0.6 * pi) * c)) h);
+  --cv-primary-green-60: oklch(from var(--cv-primary-green) 60% calc(var(--cv-primary-green-base) + (sin(0.5 * pi) * c)) h);
+  --cv-primary-green-70: oklch(from var(--cv-primary-green) 70% calc(var(--cv-primary-green-base) + (sin(0.4 * pi) * c)) h);
+  --cv-primary-green-80: oklch(from var(--cv-primary-green) 80% calc(var(--cv-primary-green-base) + (sin(0.3 * pi) * c)) h);
+  --cv-primary-green-90: oklch(from var(--cv-primary-green) 90% calc(var(--cv-primary-green-base) + (sin(0.2 * pi) * c)) h);
+  --cv-primary-green-100: oklch(from var(--cv-primary-green) 100% calc(var(--cv-primary-green-base) + (sin(0.1 * pi) * c)) h);
+  
+  /* neutrals */
+  --cv-black: hsl(0deg 0% 0%);
+  --cv-white: hsl(0deg 0% 100%);
+}
+
+.cv-panel {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,55 +34,100 @@
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  box-shadow: 0.125rem 0 0.625rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0.125rem 0 0.625rem var(--cv-black);
   overflow-y: auto;
 }
 
-.carbon-visualizer-panel--visible {
+.cv-panel--visible {
   transform: translateX(0);
 }
 
-/* Panel variants */
-.carbon-visualizer-panel--welcome {
-  background: linear-gradient(135deg, #2ecc71, #27ae60);
-  color: white;
-}
-
 /* Panel header */
-.carbon-visualizer-panel__header {
+.cv-panel__header {
   padding: 1rem 1.5rem 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--cv-white);
 }
 
-.carbon-visualizer-panel__title {
+.cv-panel__title {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--cv-white);
 }
 
 /* Panel content */
-.carbon-visualizer-panel__content {
+.cv-panel__content {
   padding: 1.5rem;
+}
+
+/* Features list & content */
+.cv-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+}
+
+.cv-feature__icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.cv-feature__text {
+  color: var(--cv-white);
+  font-weight: 500;
+}
+
+/* Button */
+.cv-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cv-btn--primary {
+  background: transparent;
+  color: var(--cv-white);
+  border: 2px solid var(--cv-white);
+}
+
+.cv-btn--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--cv-black);
+}
+
+.cv-btn--primary:active {
+  transform: translateY(0);
+}
+
+.cv-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 /* Responsive design */
 @media (max-width: 480px) {
-  .carbon-visualizer-panel {
+  .cv-panel {
     width: 100%;
   }
 }
 
 /* High contrast mode support */
-@media (prefers-contrast: high) {
-  .carbon-visualizer-panel {
-    border: 2px solid #000000;
+@media (prefers-contrast: more) {
+  .cv-panel {
+    border: 2px solid var(--cv-black);
   }
 }
 
 /* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .carbon-visualizer-panel {
+@media (prefers-reduced-motion) {
+  .cv-panel {
     transition: none;
   }
 }
