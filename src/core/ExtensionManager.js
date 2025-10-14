@@ -137,3 +137,5 @@ class ExtensionManager {
 }
 
 export { ExtensionManager };
+
+export const extensionManager = new ExtensionManager();
