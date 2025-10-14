@@ -56,15 +56,20 @@ class ExtensionManager {
 
   async togglePanel(panelType) {
     try {
-      const existingPanelInDOM = this.panels.get('.cv-panel--welcome');
+      const existingPanelInDOM = this.panels.get(panelType);
 
-      if (existingPanelInDOM) {
-        existingPanelInDOM.classList.remove('cv-panel--visible');
-        // exit animation completes and then remove panel from DOM
-        setTimeout(() => {
-          existingPanelInDOM.remove();
-        }, 300);
+      if (existingPanelInDOM && existingPanelInDOM.isVisible) {
+        // Panel exists and is visible -> hide it
+        await existingPanelInDOM.hide();
+      } else if (existingPanelInDOM && !existingPanelInDOM.isVisible) {
+        // Panel exists but hidden -> ensure it's initialized and show it
+        if (!existingPanelInDOM.container || !existingPanelInDOM.container.parentNode) {
+          // Re-initialize if container is missing or not in DOM
+          await existingPanelInDOM.initialize();
+        }
+        await existingPanelInDOM.show();
       } else {
+        // Panel doesn't exist -> create and open it
         await this.openPanel(panelType);
       }
     }
