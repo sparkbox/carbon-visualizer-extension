@@ -1,4 +1,5 @@
 // Welcome panel JavaScript
+import { makePageSpeedAPIRequest } from "../../core/PageSpeedService.js";
 
 export function initializePanel(panelType, data) {
   // Get the container element
@@ -20,7 +21,11 @@ export function initializePanel(panelType, data) {
   analyzeBtn.addEventListener('click', () => {
     // For now, just show a simple message
     analyzeBtn.disabled = true;
-    analyzeBtn.textContent = 'Coming Soon!';
+    analyzeBtn.textContent = 'Test: logging to console...';
+
+    // Make API request.
+    const currentPageURL = window.location.toString();
+    const pageSpeedResults = makePageSpeedAPIRequest(currentPageURL, true);
     
     setTimeout(() => {
       analyzeBtn.disabled = false;
