@@ -13,13 +13,13 @@ class Panel {
     const configs = {
       welcome: {
         htmlFile: 'src/panels/welcome/welcome.html',
-        cssFile: 'src/panels/welcome/welcome.css',
+        cssFile: 'src/styles/styles.css',
         jsFile: 'src/panels/welcome/welcome.js',
         containerId: 'carbon-visualizer-welcome-panel',
-        className: 'cv-panel--welcome'
+        className: 'cv cv-panel--welcome'
       }
     };
-    
+
     return configs[type] || configs.welcome;
   }
 
@@ -28,16 +28,16 @@ class Panel {
     this.container = document.createElement('div');
     this.container.id = this.config.containerId;
     this.container.className = `cv-panel ${this.config.className}`;
-    
+
     // Reset visibility state
     this.isVisible = false;
-    
+
     // Load panel-specific CSS
     await this.loadPanelCSS();
-    
+
     // Load and inject HTML
     await this.loadPanelHTML();
-    
+
     // Load panel-specific JavaScript
     await this.loadPanelJS();
   }
@@ -47,7 +47,7 @@ class Panel {
       const cssUrl = this.browserAPI.runtime.getURL(this.config.cssFile);
       const response = await fetch(cssUrl);
       const css = await response.text();
-      
+
       const style = document.createElement('style');
       style.id = `carbon-visualizer-${this.type}-css`;
       style.textContent = css;
@@ -62,12 +62,12 @@ class Panel {
       const htmlUrl = this.browserAPI.runtime.getURL(this.config.htmlFile);
       const response = await fetch(htmlUrl);
       const html = await response.text();
-      
+
       // Parse and inject HTML
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       const panelContent = doc.querySelector('#carbon-visualizer-panel-content');
-      
+
       if (panelContent) {
         this.container.innerHTML = panelContent.innerHTML;
       } else {
@@ -83,10 +83,10 @@ class Panel {
       // Import and execute the panel module
       const jsUrl = this.browserAPI.runtime.getURL(this.config.jsFile);
       const module = await import(jsUrl);
-      
+
       // Wait for DOM to be ready and elements to be available
       await this.waitForElements();
-      
+
       // Call the initializePanel function if it exists
       if (typeof module.initializePanel === 'function') {
         // Pass the container element and close function as part of the data
@@ -112,18 +112,18 @@ class Panel {
   async waitForElements() {
     // Wait a small amount for DOM to be ready
     await new Promise(resolve => setTimeout(resolve, 50));
-    
+
     // Check if essential elements exist, if not wait a bit more
     const maxRetries = 10;
     let retries = 0;
-    
+
     while (retries < maxRetries) {
       const analyzeBtn = this.container.querySelector('#analyze-page-btn');
-      
+
       if (analyzeBtn) {
         return; // Element found, we're good to go
       }
-      
+
       // Wait a bit more and try again
       await new Promise(resolve => setTimeout(resolve, 50));
       retries++;
@@ -149,18 +149,18 @@ class Panel {
 
     // Append to DOM
     document.body.appendChild(this.container);
-    
+
     // Start hidden for animation
     this.container.classList.remove('cv-panel--visible');
-    
+
     // Force reflow
     this.container.offsetHeight;
-    
+
     // Animate in
     requestAnimationFrame(() => {
       this.container.classList.add('cv-panel--visible');
     });
-    
+
     this.isVisible = true;
   }
 
@@ -170,17 +170,17 @@ class Panel {
         resolve();
         return;
       }
-      
+
       if (!this.isVisible) {
         resolve();
         return;
       }
 
       this.container.classList.remove('cv-panel--visible');
-      
+
       // Set isVisible to false immediately so toggle logic works
       this.isVisible = false;
-      
+
       // Remove after animation completes
       setTimeout(() => {
         if (this.container && this.container.parentNode) {
@@ -193,7 +193,7 @@ class Panel {
 
   hideImmediate() {
     if (!this.container) return;
-    
+
     if (this.container.parentNode) {
       this.container.remove();
     }
