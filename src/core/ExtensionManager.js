@@ -66,7 +66,7 @@ class ExtensionManager {
     this.lastToggleTime = now;
 
     try {
-      const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
+      const existingPanelInDOM = this.panels.get('.cv-panel--welcome');
 
       if (existingPanelInDOM) {
         existingPanelInDOM.classList.remove('cv-panel--visible');
@@ -87,7 +87,7 @@ class ExtensionManager {
 
   cleanupOrphanedPanels() {
     // Remove any orphaned panels from DOM
-    const orphanedPanels = document.querySelectorAll('.cv-panel');
+    const orphanedPanels = this.panels.get('.cv-panel');
     orphanedPanels.forEach(panel => {
       panel.remove();
     });
@@ -134,7 +134,7 @@ class ExtensionManager {
     this.panels.clear();
 
     // Also remove any orphaned panels from DOM
-    const existingPanels = document.querySelectorAll('.cv-panel');
+    const existingPanels = this.panels.get('.cv-panel');
     existingPanels.forEach(panel => {
       panel.remove();
     });
