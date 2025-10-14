@@ -1,0 +1,48 @@
+name: Build Extension Packages
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build extension packages
+              run: npm run build
+
+            - name: Upload Chrome extension artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: carbon-visualizer-chrome
+                  path: build/carbon-visualizer-chrome.zip
+                  retention-days: 30
+
+            - name: Upload Firefox extension artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: carbon-visualizer-firefox
+                  path: build/carbon-visualizer-firefox.zip
+                  retention-days: 30
+
+            - name: Upload build directory artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: build-directory
+                  path: build/
+                  retention-days: 30
