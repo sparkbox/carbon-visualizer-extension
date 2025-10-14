@@ -35,6 +35,9 @@ jobs:
             - name: Build extension packages
               run: npm run build
 
+            - name: Validate Firefox modifications
+              run: node -e "const m=JSON.parse(require('fs').readFileSync('build/firefox/manifest.json','utf8')); if(!m.background.scripts||!m.browser_specific_settings?.gecko||m.background.service_worker) {console.error('❌ Firefox manifest missing required modifications or still has service_worker'); process.exit(1);} console.log('✅ Firefox manifest properly modified')"
+
             - name: Upload Chrome extension artifact
               uses: actions/upload-artifact@v4
               with:
