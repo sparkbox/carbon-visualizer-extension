@@ -7,8 +7,9 @@ class ExtensionManager {
     this.browserAPI = browserAPI || (typeof browser !== 'undefined' ? browser : chrome);
     this.panels = new Map();
     this.initialized = false;
-    this.isToggling = false; 
-    this.lastToggleTime = 0; 
+
+    // TODO: Set the other panel types in the panels map
+    this.panels.set('welcome', new Panel('welcome', {}, this.browserAPI));
   }
 
   async initialize() {
@@ -27,6 +28,7 @@ class ExtensionManager {
     }
 
     await this.loadCoreCSS();
+  
     
     this.initialized = true;
   }
@@ -70,19 +72,6 @@ class ExtensionManager {
   }
 
   async togglePanel(panelType) {
-    const now = Date.now();
-    
-    if (now - this.lastToggleTime < 500) {
-      return;
-    }
-    
-    if (this.isToggling) {
-      return;
-    }
-    
-    this.isToggling = true;
-    this.lastToggleTime = now;
-    
     try {
       const existingPanelInDOM = this.panels.get('.cv-panel--welcome');
       
@@ -95,11 +84,9 @@ class ExtensionManager {
       } else {
         await this.openPanel(panelType);
       }
-    } finally {
-
-      setTimeout(() => {
-        this.isToggling = false;
-      }, 100);
+    }
+    catch (error) {
+      console.error('Error in togglePanel():', error);
     }
   }
 
