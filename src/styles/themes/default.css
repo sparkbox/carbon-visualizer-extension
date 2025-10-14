@@ -1,0 +1,165 @@
+.cv,
+[data-theme] {
+  /* set up light and dark mode colors */
+  /* don't use these directly in components */
+  --cv-neutral-text-color-light: var(--cv-color-gray-30);
+  --cv-neutral-text-color-dark: var(--cv-color-gray-90);
+  --cv-neutral-background-color-light: var(--cv-color-gray-100);
+  --cv-neutral-background-color-dark: var(--cv-color-gray-10);
+  --cv-neutral-border-color-light: var(--cv-color-gray-30);
+  --cv-neutral-border-color-dark: var(--cv-color-gray-90);
+  --cv-neutral-shadow-color-light: var(--cv-color-gray-80);
+  --cv-neutral-shadow-color-dark: var(--cv-color-gray-70);
+
+  --cv-primary-text-color-light: var(--cv-color-blue-30);
+  --cv-primary-text-color-dark: var(--cv-color-blue-90);
+  --cv-primary-background-color-light: var(--cv-color-blue-100);
+  --cv-primary-background-color-dark: var(--cv-color-blue-10);
+  --cv-primary-border-color-light: var(--cv-color-blue-30);
+  --cv-primary-border-color-dark: var(--cv-color-blue-90);
+  --cv-primary-shadow-color-light: var(--cv-color-blue-80);
+  --cv-primary-shadow-color-dark: var(--cv-color-blue-70);
+
+  --cv-secondary-text-color-light: var(--cv-color-purple-30);
+  --cv-secondary-text-color-dark: var(--cv-color-purple-90);
+  --cv-secondary-background-color-light: var(--cv-color-purple-100);
+  --cv-secondary-background-color-dark: var(--cv-color-purple-10);
+  --cv-secondary-border-color-light: var(--cv-color-purple-30);
+  --cv-secondary-border-color-dark: var(--cv-color-purple-90);
+  --cv-secondary-shadow-color-light: var(--cv-color-purple-80);
+  --cv-secondary-shadow-color-dark: var(--cv-color-purple-70);
+
+  --cv-accent-text-color-light: var(--cv-color-magenta-30);
+  --cv-accent-text-color-dark: var(--cv-color-magenta-90);
+  --cv-accent-background-color-light: var(--cv-color-magenta-100);
+  --cv-accent-background-color-dark: var(--cv-color-magenta-10);
+  --cv-accent-border-color-light: var(--cv-color-magenta-30);
+  --cv-accent-border-color-dark: var(--cv-color-magenta-90);
+  --cv-accent-shadow-color-light: var(--cv-color-magenta-80);
+  --cv-accent-shadow-color-dark: var(--cv-color-magenta-70);
+
+  --cv-error-text-color-light: var(--cv-color-red-30);
+  --cv-error-text-color-dark: var(--cv-color-red-90);
+  --cv-error-background-color-light: var(--cv-color-red-100);
+  --cv-error-background-color-dark: var(--cv-color-red-10);
+  --cv-error-border-color-light: var(--cv-color-red-30);
+  --cv-error-border-color-dark: var(--cv-color-red-90);
+  --cv-error-shadow-color-light: var(--cv-color-red-80);
+  --cv-error-shadow-color-dark: var(--cv-color-red-70);
+
+  --cv-warning-text-color-light: var(--cv-color-yellow-30);
+  --cv-warning-text-color-dark: var(--cv-color-yellow-90);
+  --cv-warning-background-color-light: var(--cv-color-yellow-100);
+  --cv-warning-background-color-dark: var(--cv-color-yellow-10);
+  --cv-warning-border-color-light: var(--cv-color-yellow-30);
+  --cv-warning-border-color-dark: var(--cv-color-yellow-90);
+  --cv-warning-shadow-color-light: var(--cv-color-yellow-80);
+
+  --cv-success-text-color-light: var(--cv-color-green-30);
+  --cv-success-text-color-dark: var(--cv-color-green-90);
+  --cv-success-background-color-light: var(--cv-color-green-100);
+  --cv-success-background-color-dark: var(--cv-color-green-10);
+  --cv-success-border-color-light: var(--cv-color-green-30);
+  --cv-success-border-color-dark: var(--cv-color-green-90);
+  --cv-success-shadow-color-light: var(--cv-color-green-80);
+  --cv-success-shadow-color-dark: var(--cv-color-green-70);
+
+  --cv-info-text-color-light: var(--cv-color-teal-30);
+  --cv-info-text-color-dark: var(--cv-color-teal-90);
+  --cv-info-background-color-light: var(--cv-color-teal-100);
+  --cv-info-background-color-dark: var(--cv-color-teal-10);
+  --cv-info-border-color-light: var(--cv-color-teal-30);
+  --cv-info-border-color-dark: var(--cv-color-teal-90);
+  --cv-info-shadow-color-light: var(--cv-color-teal-80);
+  --cv-info-shadow-color-dark: var(--cv-color-teal-70);
+
+  /* define default colors using the light mode variants */
+  /* these are what should be used in components */
+  --cv-neutral-text-color: var(--cv-neutral-text-color-light);
+  --cv-neutral-background-color: var(--cv-neutral-background-color-light);
+  --cv-neutral-border-color: var(--cv-neutral-border-color-light);
+  --cv-neutral-shadow-color: var(--cv-neutral-shadow-color-light);
+
+  --cv-primary-text-color: var(--cv-primary-text-color-light);
+  --cv-primary-background-color: var(--cv-primary-background-color-light);
+  --cv-primary-border-color: var(--cv-primary-border-color-light);
+  --cv-primary-shadow-color: var(--cv-primary-shadow-color-light);
+
+  --cv-secondary-text-color: var(--cv-secondary-text-color-light);
+  --cv-secondary-background-color: var(--cv-secondary-background-color-light);
+  --cv-secondary-border-color: var(--cv-secondary-border-color-light);
+  --cv-secondary-shadow-color: var(--cv-secondary-shadow-color-light);
+
+  --cv-accent-text-color: var(--cv-accent-text-color-light);
+  --cv-accent-background-color: var(--cv-accent-background-color-light);
+  --cv-accent-border-color: var(--cv-accent-border-color-light);
+  --cv-accent-shadow-color: var(--cv-accent-shadow-color-light);
+
+  --cv-error-text-color: var(--cv-error-text-color-light);
+  --cv-error-background-color: var(--cv-error-background-color-light);
+  --cv-error-border-color: var(--cv-error-border-color-light);
+  --cv-error-shadow-color: var(--cv-error-shadow-color-light);
+
+  --cv-warning-text-color: var(--cv-warning-text-color-light);
+  --cv-warning-background-color: var(--cv-warning-background-color-light);
+  --cv-warning-border-color: var(--cv-warning-border-color-light);
+  --cv-warning-shadow-color: var(--cv-warning-shadow-color-light);
+
+  --cv-success-text-color: var(--cv-success-text-color-light);
+  --cv-success-background-color: var(--cv-success-background-color-light);
+  --cv-success-border-color: var(--cv-success-border-color-light);
+  --cv-success-shadow-color: var(--cv-success-shadow-color-light);
+
+  --cv-info-text-color: var(--cv-info-text-color-light);
+  --cv-info-background-color: var(--cv-info-background-color-light);
+  --cv-info-border-color: var(--cv-info-border-color-light);
+  --cv-info-shadow-color: var(--cv-info-shadow-color-light);
+
+  /* in supporting browsers, define light and dark mode colors simultaneously */
+  @supports (color: light-dark(#fff, #000)) {
+    --cv-neutral-text-color: light-dark(var(--cv-neutral-text-color-light), var(--cv-neutral-text-color-dark));
+    --cv-neutral-background-color: light-dark(var(--cv-neutral-background-color-light), var(--cv-neutral-background-color-dark));
+    --cv-neutral-border-color: light-dark(var(--cv-neutral-border-color-light), var(--cv-neutral-border-color-dark));
+    --cv-neutral-shadow-color: light-dark(var(--cv-neutral-shadow-color-light), var(--cv-neutral-shadow-color-dark));
+
+    --cv-primary-text-color: light-dark(var(--cv-primary-text-color-light), var(--cv-primary-text-color-dark));
+    --cv-primary-background-color: light-dark(var(--cv-primary-background-color-light), var(--cv-primary-background-color-dark));
+    --cv-primary-border-color: light-dark(var(--cv-primary-border-color-light), var(--cv-primary-border-color-dark));
+    --cv-primary-shadow-color: light-dark(var(--cv-primary-shadow-color-light), var(--cv-primary-shadow-color-dark));
+
+    --cv-secondary-text-color: light-dark(var(--cv-secondary-text-color-light), var(--cv-secondary-text-color-dark));
+    --cv-secondary-background-color: light-dark(var(--cv-secondary-background-color-light), var(--cv-secondary-background-color-dark));
+    --cv-secondary-border-color: light-dark(var(--cv-secondary-border-color-light), var(--cv-secondary-border-color-dark));
+    --cv-secondary-shadow-color: light-dark(var(--cv-secondary-shadow-color-light), var(--cv-secondary-shadow-color-dark));
+
+    --cv-accent-text-color: light-dark(var(--cv-accent-text-color-light), var(--cv-accent-text-color-dark));
+    --cv-accent-background-color: light-dark(var(--cv-accent-background-color-light), var(--cv-accent-background-color-dark));
+    --cv-accent-border-color: light-dark(var(--cv-accent-border-color-light), var(--cv-accent-border-color-dark));
+
+    --cv-error-text-color: light-dark(var(--cv-error-text-color-light), var(--cv-error-text-color-dark));
+    --cv-error-background-color: light-dark(var(--cv-error-background-color-light), var(--cv-error-background-color-dark));
+    --cv-error-border-color: light-dark(var(--cv-error-border-color-light), var(--cv-error-border-color-dark));
+    --cv-error-shadow-color: light-dark(var(--cv-error-shadow-color-light), var(--cv-error-shadow-color-dark));
+
+    --cv-warning-text-color: light-dark(var(--cv-warning-text-color-light), var(--cv-warning-text-color-dark));
+    --cv-warning-background-color: light-dark(var(--cv-warning-background-color-light), var(--cv-warning-background-color-dark));
+    --cv-warning-border-color: light-dark(var(--cv-warning-border-color-light), var(--cv-warning-border-color-dark));
+    --cv-warning-shadow-color: light-dark(var(--cv-warning-shadow-color-light), var(--cv-warning-shadow-color-dark));
+
+    --cv-success-text-color: light-dark(var(--cv-success-text-color-light), var(--cv-success-text-color-dark));
+    --cv-success-background-color: light-dark(var(--cv-success-background-color-light), var(--cv-success-background-color-dark));
+    --cv-success-border-color: light-dark(var(--cv-success-border-color-light), var(--cv-success-border-color-dark));
+    --cv-success-shadow-color: light-dark(var(--cv-success-shadow-color-light), var(--cv-success-shadow-color-dark));
+
+    --cv-info-text-color: light-dark(var(--cv-info-text-color-light), var(--cv-info-text-color-dark));
+    --cv-info-background-color: light-dark(var(--cv-info-background-color-light), var(--cv-info-background-color-dark));
+    --cv-info-border-color: light-dark(var(--cv-info-border-color-light), var(--cv-info-border-color-dark));
+    --cv-info-shadow-color: light-dark(var(--cv-info-shadow-color-light), var(--cv-info-shadow-color-dark));
+  }
+
+  --cv-color: var(--cv-neutral-text-color);
+  --cv-background-color: var(--cv-neutral-background-color);
+  --cv-link-color: var(--cv-primary-text-color);
+  --cv-link-color-hover: var(--cv-accent-text-color);
+  --cv-link-color-visited: var(--cv-secondary-text-color);
+}
