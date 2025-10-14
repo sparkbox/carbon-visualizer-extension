@@ -3,12 +3,21 @@ name: Build Extension Packages
 on:
     push:
         branches: [main]
+        paths-ignore:
+            - "README.md"
+            - "LICENSE"
     pull_request:
         branches: [main]
+        paths-ignore:
+            - "README.md"
+            - "LICENSE"
+    workflow_dispatch: # Allows manual re-run from GitHub UI
 
 jobs:
     build:
         runs-on: ubuntu-latest
+        # Continue on error to ensure we always get some output
+        continue-on-error: false
 
         steps:
             - name: Checkout code
@@ -46,3 +55,8 @@ jobs:
                   name: build-directory
                   path: build/
                   retention-days: 30
+
+            - name: Notify on failure
+              if: failure()
+              run: |
+                  echo "❌ Build failed! Check the logs above for details."
