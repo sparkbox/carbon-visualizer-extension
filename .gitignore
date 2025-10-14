@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+
+# Binary files
+.DS_Store
