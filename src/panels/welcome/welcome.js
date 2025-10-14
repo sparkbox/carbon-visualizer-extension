@@ -24,7 +24,7 @@ export function initializePanel(panelType, data) {
     
     setTimeout(() => {
       analyzeBtn.disabled = false;
-      analyzeBtn.textContent = 'Analyze This Page';
+      analyzeBtn.textContent = 'Analyze this website';
     }, 2000);
   });
 }
