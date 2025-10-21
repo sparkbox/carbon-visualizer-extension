@@ -58,20 +58,13 @@ class ExtensionManager {
 
   async togglePanel(panelType) {
     try {
-      const existingPanelInDOM = this.panels.get(panelType);
+      const panel = this.panels.get(panelType);
 
-      if (existingPanelInDOM && existingPanelInDOM.isVisible) {
-        // Panel exists and is visible -> hide it
-        await existingPanelInDOM.hide();
-      } else if (existingPanelInDOM && !existingPanelInDOM.isVisible) {
-        // Panel exists but hidden -> ensure it's initialized and show it
-        if (!existingPanelInDOM.container || !existingPanelInDOM.container.parentNode) {
-          // Re-initialize if container is missing or not in DOM
-          await existingPanelInDOM.initialize();
-        }
-        await existingPanelInDOM.show();
+      if (panel && panel.isVisible) {
+        // Panel is visible -> close it
+        this.closePanel(panelType);
       } else {
-        // Panel doesn't exist -> create and open it
+        // Panel doesn't exist or is hidden -> open it
         await this.openPanel(panelType);
       }
     }
