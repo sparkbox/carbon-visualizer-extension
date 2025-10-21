@@ -29,6 +29,8 @@ class ExtensionManager {
 
     await this.loadCoreCSS();
 
+    this.cleanupOrphanedPanels();
+
     this.initialized = true;
   }
 
@@ -79,8 +81,8 @@ class ExtensionManager {
   }
 
   cleanupOrphanedPanels() {
-    // Remove any orphaned panels from DOM
-    const orphanedPanels = this.panels.get('.cv-panel');
+    // Remove any orphaned panels from DOM that aren't tracked in our map
+    const orphanedPanels = document.querySelectorAll('.cv-panel');
     orphanedPanels.forEach(panel => {
       panel.remove();
     });
@@ -124,13 +126,12 @@ class ExtensionManager {
         panel.hideImmediate();
       }
     }
+
+    // Clear the panels map
     this.panels.clear();
 
     // Also remove any orphaned panels from DOM
-    const existingPanels = this.panels.get('.cv-panel');
-    existingPanels.forEach(panel => {
-      panel.remove();
-    });
+    this.cleanupOrphanedPanels();
   }
 
   // TODO: Assessment workflow methods will be added later
