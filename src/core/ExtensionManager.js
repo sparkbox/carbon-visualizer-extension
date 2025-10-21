@@ -44,7 +44,6 @@ class ExtensionManager {
           await this.openPanel(message.panelType || 'welcome', message.data);
           break;
         default:
-
           break;
       }
     } catch (error) {
@@ -84,19 +83,20 @@ class ExtensionManager {
     this.lastToggleTime = now;
     
     try {
-      const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
+      const visiblePanels = document.querySelectorAll('.cv-panel.cv-panel--visible');
       
-      if (existingPanelInDOM) {
-        existingPanelInDOM.classList.remove('cv-panel--visible');
-        // exit animation completes and then remove panel from DOM
-        setTimeout(() => {
-          existingPanelInDOM.remove();
-        }, 300);
+      if (visiblePanels.length > 0) {
+        visiblePanels.forEach((panel) => {
+          panel.classList.remove('cv-panel--visible');
+          
+          setTimeout(() => {
+            panel.remove();
+          }, 300);
+        });
       } else {
         await this.openPanel(panelType);
       }
     } finally {
-
       setTimeout(() => {
         this.isToggling = false;
       }, 100);
@@ -166,3 +166,5 @@ class ExtensionManager {
 
 // Export the class for dynamic imports
 export { ExtensionManager };
+
+export const extensionManager = new ExtensionManager();
