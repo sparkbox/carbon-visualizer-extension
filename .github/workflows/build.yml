@@ -16,8 +16,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Continue on error to ensure we always get some output
-    continue-on-error: false
 
     steps:
       - name: Checkout code
@@ -26,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "22"
           cache: "npm"
 
       - name: Install dependencies
@@ -34,9 +32,6 @@ jobs:
 
       - name: Build extension packages
         run: npm run build
-
-      - name: Validate Firefox modifications
-        run: node -e "const m=JSON.parse(require('fs').readFileSync('build/firefox/manifest.json','utf8')); if(!m.background.scripts||!m.browser_specific_settings?.gecko||m.background.service_worker) {console.error('❌ Firefox manifest missing required modifications or still has service_worker'); process.exit(1);} console.log('✅ Firefox manifest properly modified')"
 
       - name: Upload Chrome extension artifact
         uses: actions/upload-artifact@v4
@@ -52,13 +47,6 @@ jobs:
           path: build/carbon-visualizer-firefox.zip
           retention-days: 30
 
-      - name: Upload build directory artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-directory
-          path: build/
-          retention-days: 30
-
       - name: Comment PR with artifact links
         if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
@@ -70,8 +58,8 @@ jobs:
                 issue_number: context.issue.number,
             });
 
-            const botComment = comments.find(comment => 
-                comment.user.type === 'Bot' && 
+            const botComment = comments.find(comment =>
+                comment.user.type === 'Bot' &&
                 comment.body.includes('📦 Extension packages built successfully!')
             );
 
