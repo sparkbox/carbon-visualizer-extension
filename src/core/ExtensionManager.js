@@ -7,8 +7,9 @@ class ExtensionManager {
     this.browserAPI = browserAPI || (typeof browser !== 'undefined' ? browser : chrome);
     this.panels = new Map();
     this.initialized = false;
-    this.isToggling = false; 
-    this.lastToggleTime = 0; 
+
+    // TODO: Set the other panel types in the panels map
+    this.panels.set('welcome', new Panel('welcome', {}, this.browserAPI));
   }
 
   async initialize() {
@@ -25,8 +26,10 @@ class ExtensionManager {
         return false; // Don't keep channel open
       });
     }
-
+    
     await this.loadCoreCSS();
+
+    this.cleanupOrphanedPanels();
     
     this.initialized = true;
   }
@@ -70,41 +73,24 @@ class ExtensionManager {
   }
 
   async togglePanel(panelType) {
-    const now = Date.now();
-    
-    if (now - this.lastToggleTime < 500) {
-      return;
-    }
-    
-    if (this.isToggling) {
-      return;
-    }
-    
-    this.isToggling = true;
-    this.lastToggleTime = now;
-    
     try {
-      const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
+      const panel = this.panels.get(panelType);
       
-      if (existingPanelInDOM) {
-        existingPanelInDOM.classList.remove('cv-panel--visible');
-        // exit animation completes and then remove panel from DOM
-        setTimeout(() => {
-          existingPanelInDOM.remove();
-        }, 300);
+      if (panel && panel.isVisible) {
+        // Panel is visible -> close it
+        this.closePanel(panelType);
       } else {
+        // Panel doesn't exist or is hidden -> open it
         await this.openPanel(panelType);
       }
-    } finally {
-
-      setTimeout(() => {
-        this.isToggling = false;
-      }, 100);
+    }
+    catch (error) {
+      console.error('Error in togglePanel():', error);
     }
   }
 
   cleanupOrphanedPanels() {
-    // Remove any orphaned panels from DOM
+    // Remove any orphaned panels from DOM that aren't tracked in our map
     const orphanedPanels = document.querySelectorAll('.cv-panel');
     orphanedPanels.forEach(panel => {
       panel.remove();
@@ -149,13 +135,12 @@ class ExtensionManager {
         panel.hideImmediate();
       }
     }
+    
+    // Clear the panels map
     this.panels.clear();
     
     // Also remove any orphaned panels from DOM
-    const existingPanels = document.querySelectorAll('.cv-panel');
-    existingPanels.forEach(panel => {
-      panel.remove();
-    });
+    this.cleanupOrphanedPanels();
   }
 
   // TODO: Assessment workflow methods will be added later
