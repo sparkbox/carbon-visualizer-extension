@@ -1,0 +1,21 @@
+.cv {
+  /* somewhat randomly selected system font stacks from https://modernfontstacks.com/ (replace as needed) */
+  --cv-font-family-display: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+  --cv-font-family-sans: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+  --cv-font-family-serif: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+  --cv-font-family-mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+
+  /* commonly needed font sizes, named for what they're used for (avoiding overly specific names like h1, h2, etc.) */
+  --cv-font-size-display-lg: 7.25rem;
+  --cv-font-size-display-md: 5.5rem;
+  --cv-font-size-display-sm: 4rem;
+  --cv-font-size-heading-xxl: 3rem;
+  --cv-font-size-heading-xl: 2.25rem;
+  --cv-font-size-heading-lg: 1.75rem;
+  --cv-font-size-heading-md: 1.25rem;
+  --cv-font-size-heading-sm: 1rem;
+  --cv-font-size-heading-xs: 0.875rem;
+  --cv-font-size-body-lg: 1.25rem;
+  --cv-font-size-body-md: 1rem;
+  --cv-font-size-body-sm: 0.875rem;
+ }

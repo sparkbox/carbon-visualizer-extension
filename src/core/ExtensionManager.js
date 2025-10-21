@@ -7,15 +7,15 @@ class ExtensionManager {
     this.browserAPI = browserAPI || (typeof browser !== 'undefined' ? browser : chrome);
     this.panels = new Map();
     this.initialized = false;
-    this.isToggling = false; 
-    this.lastToggleTime = 0; 
+    this.isToggling = false;
+    this.lastToggleTime = 0;
   }
 
   async initialize() {
     if (this.initialized) {
       return;
     }
-    
+
     // Handle the message and send response
     if (!this.messageListenerAdded) {
       this.messageListenerAdded = true;
@@ -26,8 +26,6 @@ class ExtensionManager {
       });
     }
 
-    await this.loadCoreCSS();
-    
     this.initialized = true;
   }
 
@@ -52,40 +50,24 @@ class ExtensionManager {
     }
   }
 
-  async loadCoreCSS() {
-    if (document.getElementById('carbon-visualizer-core-css')) return;
-
-    try {
-      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core.css');
-      const response = await fetch(cssUrl);
-      const css = await response.text();
-      
-      const style = document.createElement('style');
-      style.id = 'carbon-visualizer-core-css';
-      style.textContent = css;
-      document.head.appendChild(style);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   async togglePanel(panelType) {
     const now = Date.now();
-    
+
     if (now - this.lastToggleTime < 500) {
       return;
     }
-    
+
     if (this.isToggling) {
       return;
     }
-    
+
     this.isToggling = true;
     this.lastToggleTime = now;
-    
+
     try {
       const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
-      
+
       if (existingPanelInDOM) {
         existingPanelInDOM.classList.remove('cv-panel--visible');
         // exit animation completes and then remove panel from DOM
@@ -109,7 +91,7 @@ class ExtensionManager {
     orphanedPanels.forEach(panel => {
       panel.remove();
     });
-    
+
     // Reset all panel states
     for (const [type, panel] of this.panels) {
       if (panel) {
@@ -120,16 +102,16 @@ class ExtensionManager {
 
   async openPanel(panelType, data = {}) {
     let panel = this.panels.get(panelType);
-    
+
     // Always create a fresh panel to avoid state issues
     if (!panel) {
       panel = new Panel(panelType, data, this.browserAPI);
       this.panels.set(panelType, panel);
     }
-    
+
     // Always reinitialize to ensure clean state
     await panel.initialize();
-    
+
     // Show the panel
     await panel.show();
   }
@@ -150,7 +132,7 @@ class ExtensionManager {
       }
     }
     this.panels.clear();
-    
+
     // Also remove any orphaned panels from DOM
     const existingPanels = document.querySelectorAll('.cv-panel');
     existingPanels.forEach(panel => {

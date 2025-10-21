@@ -1,0 +1,16 @@
+/*
+ * the chrome-extension://* prefix lets us import from extension files
+ * it will probably be best to have some sort of build step to output a single
+ * file so we don't have to deal with browser compatibility issues
+ */
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/tokens/color.css');
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/tokens/size.css');
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/tokens/typography.css');
+
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/themes/default.css');
+
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/generic/typography.css');
+
+/* keep existing styles for now, rework when building components */
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/core.css');
+@import url('chrome-extension://__MSG_@@extension_id__/src/styles/welcome.css');
