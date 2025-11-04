@@ -1,14 +1,13 @@
-// Import Panel class
 import { Panel } from './Panel.js';
 
-// Core extension management class
 class ExtensionManager {
   constructor(browserAPI = null) {
     this.browserAPI = browserAPI || (typeof browser !== 'undefined' ? browser : chrome);
     this.panels = new Map();
     this.initialized = false;
-    this.isToggling = false;
-    this.lastToggleTime = 0;
+
+    // TODO: Set the other panel types in the panels map
+    this.panels.set('welcome', new Panel('welcome', {}, this.browserAPI));
   }
 
   async initialize() {
@@ -26,6 +25,10 @@ class ExtensionManager {
       });
     }
 
+    await this.loadCoreCSS();
+
+    this.cleanupOrphanedPanels();
+
     this.initialized = true;
   }
 
@@ -42,7 +45,6 @@ class ExtensionManager {
           await this.openPanel(message.panelType || 'welcome', message.data);
           break;
         default:
-
           break;
       }
     } catch (error) {
@@ -50,45 +52,40 @@ class ExtensionManager {
     }
   }
 
-
-  async togglePanel(panelType) {
-    const now = Date.now();
-
-    if (now - this.lastToggleTime < 500) {
-      return;
-    }
-
-    if (this.isToggling) {
-      return;
-    }
-
-    this.isToggling = true;
-    this.lastToggleTime = now;
+  async loadCoreCSS() {
+    if (document.getElementById('carbon-visualizer-core-css')) return;
 
     try {
-      const existingPanelInDOM = document.querySelector('.cv-panel--welcome');
+      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core.css');
+      const response = await fetch(cssUrl);
+      const css = await response.text();
 
-      if (existingPanelInDOM) {
-        existingPanelInDOM.classList.remove('cv-panel--visible');
-        // exit animation completes and then remove panel from DOM
-        setTimeout(() => {
-          existingPanelInDOM.remove();
-        }, 300);
+      const style = document.createElement('style');
+      style.id = 'carbon-visualizer-core-css';
+      style.textContent = css;
+      document.head.appendChild(style);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async togglePanel(panelType) {
+    try {
+      const panel = this.panels.get(panelType);
+
+      if (panel && panel.isVisible) {
+        this.closePanel(panelType);
       } else {
         await this.openPanel(panelType);
       }
-    } finally {
-
-      setTimeout(() => {
-        this.isToggling = false;
-      }, 100);
+    } catch (error) {
+      console.error('Error in togglePanel():', error);
     }
   }
 
   cleanupOrphanedPanels() {
-    // Remove any orphaned panels from DOM
     const orphanedPanels = document.querySelectorAll('.cv-panel');
-    orphanedPanels.forEach(panel => {
+    orphanedPanels.forEach((panel) => {
       panel.remove();
     });
 
@@ -103,7 +100,7 @@ class ExtensionManager {
   async openPanel(panelType, data = {}) {
     let panel = this.panels.get(panelType);
 
-    // Always create a fresh panel to avoid state issues
+    // Create a new panel if one does not already exist
     if (!panel) {
       panel = new Panel(panelType, data, this.browserAPI);
       this.panels.set(panelType, panel);
@@ -111,8 +108,6 @@ class ExtensionManager {
 
     // Always reinitialize to ensure clean state
     await panel.initialize();
-
-    // Show the panel
     await panel.show();
   }
 
@@ -120,24 +115,19 @@ class ExtensionManager {
     const panel = this.panels.get(panelType);
     if (panel) {
       panel.hide();
-      // Don't delete from map - keep for reuse
     }
   }
 
   closeAllPanels() {
-    // Hide all tracked panels immediately
     for (const [type, panel] of this.panels) {
       if (panel && panel.container) {
         panel.hideImmediate();
       }
     }
-    this.panels.clear();
 
-    // Also remove any orphaned panels from DOM
-    const existingPanels = document.querySelectorAll('.cv-panel');
-    existingPanels.forEach(panel => {
-      panel.remove();
-    });
+    // Clear the panels map and remove orphaned panels from DOM
+    this.panels.clear();
+    this.cleanupOrphanedPanels();
   }
 
   // TODO: Assessment workflow methods will be added later
@@ -146,5 +136,4 @@ class ExtensionManager {
   // async showResults(assessmentData) { ... }
 }
 
-// Export the class for dynamic imports
 export { ExtensionManager };
