@@ -8,15 +8,35 @@
  * 
  * @param {string} urlToMeasure - URL to measure the performance of.
  * @param {bool} logDebug - Whether to log results of request to the console for debugging.
- * @returns {JSON} @see https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed#response
+ * @returns {Promise<JSON>|Promise<null>} @see https://developers.google.com/speed/docs/insights/v5/reference/pagespeedapi/runpagespeed#response
  */
 export const makePageSpeedAPIRequest = async (urlToMeasure, logDebug = false) => {
     // Proxy URL using serverless function that will return data.
-    const proxyRequestUrl = ``;
+    // TODO: Replace testing environment URL with actual URL.
+    const proxyRequestUrl = `https://deploy-preview-2--carbon-calculator-proxy.netlify.app/.netlify/functions/page-speed?url=${encodeURIComponent(urlToMeasure)}`;
 
+    // Debug: log intro to console.
     if (logDebug) {
         console.log(`~~~~~~ Google PageSpeed Results for: "${urlToMeasure}" ~~~~~~`);
         console.log(`Making request to "${proxyRequestUrl}" ...`);
     }
-};
 
+    // Make request.
+    try {
+        const response = await fetch(proxyRequestUrl);
+        if (!response.ok) {
+            throw new Error(`Fetch error encountered. Response status: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        // Debug: log results to console.
+        if (logDebug) {
+            console.log(`Results JSON response:`, result);
+        }
+        return result;
+    } catch (error) {
+        console.error("Error with Page Speed API request:", error.message);
+        return null;
+    }
+};
