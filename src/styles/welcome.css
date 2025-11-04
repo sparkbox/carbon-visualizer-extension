@@ -1,33 +1,33 @@
-/* Panel variant styles */
+
+/* Welcome panel variant styles */
+
 .cv-panel--welcome {
   text-align: center;
   background: linear-gradient(to bottom,var(--cv-primary-green-10), var(--cv-primary-green-70) 80%);
   color: var(--cv-white);
 }
 
-/* Welcome panel styles */
-.cv-welcome__icon {
+.cv-panel--welcome__icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
-.cv-welcome__title {
+.cv-panel--welcome__title {
   margin: 0 0 1rem 0;
   font-size: 1.25rem;
   font-weight: 600;
   color: var(--cv-white);
 }
 
-.cv-welcome__description {
+.cv-panel--welcome__description {
   margin: 0 0 2rem 0;
   color: var(--cv-white);
   line-height: 1.5;
 }
 
-.cv-welcome__features {
+.cv-panel--welcome__features {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 2rem;
 }
-
