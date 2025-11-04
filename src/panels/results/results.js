@@ -19,6 +19,6 @@ export function initializePanel(panelType, data) {
   
   // Event listener for back to welcome button
   backToWelcomeBtn.addEventListener('click', async () => {
-    extensionManager.closePanel('results');
+    await extensionManager.openPanel('welcome');
   });
 }
