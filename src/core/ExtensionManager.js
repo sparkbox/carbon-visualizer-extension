@@ -1,7 +1,5 @@
-// Import Panel class
 import { Panel } from './Panel.js';
 
-// Core extension management class
 class ExtensionManager {
   constructor(browserAPI = null) {
     this.browserAPI = browserAPI || (typeof browser !== 'undefined' ? browser : chrome);
@@ -47,7 +45,6 @@ class ExtensionManager {
           await this.openPanel(message.panelType || 'welcome', message.data);
           break;
         default:
-
           break;
       }
     } catch (error) {
@@ -55,28 +52,40 @@ class ExtensionManager {
     }
   }
 
+  async loadCoreCSS() {
+    if (document.getElementById('carbon-visualizer-core-css')) return;
+
+    try {
+      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core.css');
+      const response = await fetch(cssUrl);
+      const css = await response.text();
+
+      const style = document.createElement('style');
+      style.id = 'carbon-visualizer-core-css';
+      style.textContent = css;
+      document.head.appendChild(style);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async togglePanel(panelType) {
     try {
       const panel = this.panels.get(panelType);
 
       if (panel && panel.isVisible) {
-        // Panel is visible -> close it
         this.closePanel(panelType);
       } else {
-        // Panel doesn't exist or is hidden -> open it
         await this.openPanel(panelType);
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error in togglePanel():', error);
     }
   }
 
   cleanupOrphanedPanels() {
-    // Remove any orphaned panels from DOM that aren't tracked in our map
     const orphanedPanels = document.querySelectorAll('.cv-panel');
-    orphanedPanels.forEach(panel => {
+    orphanedPanels.forEach((panel) => {
       panel.remove();
     });
 
@@ -91,7 +100,7 @@ class ExtensionManager {
   async openPanel(panelType, data = {}) {
     let panel = this.panels.get(panelType);
 
-    // Always create a fresh panel to avoid state issues
+    // Create a new panel if one does not already exist
     if (!panel) {
       panel = new Panel(panelType, data, this.browserAPI);
       this.panels.set(panelType, panel);
@@ -99,8 +108,6 @@ class ExtensionManager {
 
     // Always reinitialize to ensure clean state
     await panel.initialize();
-
-    // Show the panel
     await panel.show();
   }
 
@@ -108,22 +115,18 @@ class ExtensionManager {
     const panel = this.panels.get(panelType);
     if (panel) {
       panel.hide();
-      // Don't delete from map - keep for reuse
     }
   }
 
   closeAllPanels() {
-    // Hide all tracked panels immediately
     for (const [type, panel] of this.panels) {
       if (panel && panel.container) {
         panel.hideImmediate();
       }
     }
 
-    // Clear the panels map
+    // Clear the panels map and remove orphaned panels from DOM
     this.panels.clear();
-
-    // Also remove any orphaned panels from DOM
     this.cleanupOrphanedPanels();
   }
 
@@ -133,5 +136,4 @@ class ExtensionManager {
   // async showResults(assessmentData) { ... }
 }
 
-// Export the class for dynamic imports
 export { ExtensionManager };
