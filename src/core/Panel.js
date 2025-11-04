@@ -42,6 +42,9 @@ class Panel {
 
     // Load panel-specific JavaScript
     await this.loadPanelJS();
+
+    // Load universal components
+    await this.loadHeader();
   }
 
   async loadPanelHTML() {
@@ -96,6 +99,20 @@ class Panel {
     }
   }
 
+  async loadHeader() {
+    try {
+      // Import component module and insert onto the page
+      const componentUrl = this.browserAPI.runtime.getURL('src/components/Header.js');
+      const componentModule = await import(componentUrl);
+
+      const header = componentModule.createHeader();
+      const fallbackHeader = this.container.querySelector('header.cv-header');
+      fallbackHeader.replaceWith(header);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async waitForElements() {
     // Wait a small amount for DOM to be ready
     await new Promise(resolve => setTimeout(resolve, 50));
@@ -120,8 +137,8 @@ class Panel {
 
   getFallbackHTML() {
     return `
-      <header class="cv-panel__header">
-        <h2 class="cv-panel__title">Carbon Visualizer - ${this.type}</h2>
+      <header class="cv-header">
+        <h1 class="cv-header__title">Carbon Visualizer - ${this.type}</h1>
       </header>
       <main class="cv-panel__content">
         <p>Panel content for ${this.type}</p>
