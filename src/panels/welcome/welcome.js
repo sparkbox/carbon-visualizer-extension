@@ -1,4 +1,5 @@
 // Welcome panel JavaScript
+import { extensionManager }  from "../../core/ExtensionManager.js";
 
 export function initializePanel(panelType, data) {
   // Get the container element
@@ -17,14 +18,7 @@ export function initializePanel(panelType, data) {
   }
   
   // Event listener for analyze button
-  analyzeBtn.addEventListener('click', () => {
-    // For now, just show a simple message
-    analyzeBtn.disabled = true;
-    analyzeBtn.textContent = 'Coming Soon!';
-    
-    setTimeout(() => {
-      analyzeBtn.disabled = false;
-      analyzeBtn.textContent = 'Analyze This Page';
-    }, 2000);
+  analyzeBtn.addEventListener('click', async () => {
+    await extensionManager.openPanel('results');
   });
 }

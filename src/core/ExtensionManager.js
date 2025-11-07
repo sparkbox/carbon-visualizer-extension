@@ -69,12 +69,24 @@ class ExtensionManager {
     }
   }
 
+  removeVisiblePanels() {
+    const panels = document.querySelectorAll('.cv-panel.cv-panel--visible');
+    if (!panels.length) return;
+
+    panels.forEach((panel) => {
+      panel.classList.remove('cv-panel--visible');
+      setTimeout(() => {
+        panel.remove();
+      }, 300);
+    });
+  }
+
   async togglePanel(panelType) {
     try {
-      const panel = this.panels.get(panelType);
+      const visiblePanels = document.querySelectorAll('.cv-panel.cv-panel--visible');
 
-      if (panel && panel.isVisible) {
-        this.closePanel(panelType);
+      if (visiblePanels.length) {
+        this.removeVisiblePanels();
       } else {
         await this.openPanel(panelType);
       }
@@ -98,6 +110,8 @@ class ExtensionManager {
   }
 
   async openPanel(panelType, data = {}) {
+    this.removeVisiblePanels();
+
     let panel = this.panels.get(panelType);
 
     // Create a new panel if one does not already exist
@@ -111,10 +125,10 @@ class ExtensionManager {
     await panel.show();
   }
 
-  closePanel(panelType) {
+  async closePanel(panelType) {
     const panel = this.panels.get(panelType);
     if (panel) {
-      panel.hide();
+      await panel.hide();
     }
   }
 
@@ -137,3 +151,5 @@ class ExtensionManager {
 }
 
 export { ExtensionManager };
+
+export const extensionManager = new ExtensionManager();

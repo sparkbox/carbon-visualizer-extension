@@ -16,8 +16,15 @@ class Panel {
         cssFile: 'src/styles/styles.css',
         jsFile: 'src/panels/welcome/welcome.js',
         containerId: 'carbon-visualizer-welcome-panel',
-        className: 'cv cv-panel--welcome'
-      }
+        className: 'cv-panel--welcome'
+      },
+      results: {
+        htmlFile: 'src/panels/results/results.html',
+        cssFile: 'src/panels/results/results.css',
+        jsFile: 'src/panels/results/results.js',
+        containerId: 'carbon-visualizer-results-panel',
+        className: 'cv-panel--results'
+      },
     };
 
     return configs[type] || configs.welcome;
@@ -119,8 +126,9 @@ class Panel {
 
     while (retries < maxRetries) {
       const analyzeBtn = this.container.querySelector('#analyze-page-btn');
+      const backToWelcomeBtn = this.container.querySelector('#back-to-welcome-btn');
 
-      if (analyzeBtn) {
+      if (analyzeBtn || backToWelcomeBtn) {
         return; // Element found, we're good to go
       }
 
