@@ -1,10 +1,17 @@
 /* Core styles for Carbon Visualizer extension */
 
+:where(#carbon-visualizer-welcome-panel,
+#carbon-visualizer-welcome-panel *,
+#carbon-visualizer-welcome-panel *::before,
+#carbon-visualizer-welcome-panel *::after) {
+  all: initial;
+}
+
 /* TODO: these green values were generated using https://oklchroma.utilitybend.com/ and are not part of any design specs.
  * The custom properties are used in this file and welcome.css.
  * Feel free to remove them in favor of our own color palette!
  */
-:root {
+#carbon-visualizer-welcome-panel {
   /* greens */
   --cv-primary-green: hsl(114deg 64.9% 32.0%);
   --cv-primary-green-base: 0.05;
@@ -18,7 +25,7 @@
   --cv-primary-green-80: oklch(from var(--cv-primary-green) 80% calc(var(--cv-primary-green-base) + (sin(0.3 * pi) * c)) h);
   --cv-primary-green-90: oklch(from var(--cv-primary-green) 90% calc(var(--cv-primary-green-base) + (sin(0.2 * pi) * c)) h);
   --cv-primary-green-100: oklch(from var(--cv-primary-green) 100% calc(var(--cv-primary-green-base) + (sin(0.1 * pi) * c)) h);
-  
+
   /* neutrals */
   --cv-black: hsl(0deg 0% 0%);
   --cv-white: hsl(0deg 0% 100%);
