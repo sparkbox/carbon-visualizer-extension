@@ -13,7 +13,7 @@
 export const makePageSpeedAPIRequest = async (urlToMeasure, logDebug = false) => {
     // Proxy URL using serverless function that will return data.
     // TODO: Replace testing environment URL with actual URL.
-    const proxyRequestUrl = `https://deploy-preview-2--carbon-calculator-proxy.netlify.app/.netlify/functions/page-speed?url=${encodeURIComponent(urlToMeasure)}`;
+    const proxyRequestUrl = `https://carbon-calculator-proxy.netlify.app/.netlify/functions/page-speed?url=${encodeURIComponent(urlToMeasure)}`;
 
     // Debug: log intro to console.
     if (logDebug) {
