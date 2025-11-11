@@ -13,14 +13,14 @@ class Panel {
     const configs = {
       welcome: {
         htmlFile: 'src/panels/welcome/welcome.html',
-        cssFile: 'src/styles/styles.css',
+        cssFile: 'src/styles/welcome.css',
         jsFile: 'src/panels/welcome/welcome.js',
         containerId: 'carbon-visualizer-welcome-panel',
         className: 'cv-panel--welcome'
       },
       results: {
         htmlFile: 'src/panels/results/results.html',
-        cssFile: 'src/panels/results/results.css',
+        cssFile: 'src/styles/results.css',
         jsFile: 'src/panels/results/results.js',
         containerId: 'carbon-visualizer-results-panel',
         className: 'cv-panel--results'
