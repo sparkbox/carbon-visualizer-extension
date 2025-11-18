@@ -41,9 +41,9 @@ export function initializePanel(panelType, data) {
       // Reset button back to usable state.
       analyzeBtn.textContent = 'Analyze This Page';
       analyzeBtn.disabled = false;
+    } else {
+      // Success. Open results panel.
+      await extensionManager.openPanel('results');
     }
-
-    // Open results panel.
-    await extensionManager.openPanel('results');
   });
 }
