@@ -51,12 +51,18 @@ class Panel {
 
   async loadPanelCSS() {
     try {
+      // Check if this panel's CSS is already loaded
+      const styleId = `carbon-visualizer-${this.type}-css`;
+      if (document.getElementById(styleId)) {
+        return; // CSS already loaded, skip
+      }
+
       const cssUrl = this.browserAPI.runtime.getURL(this.config.cssFile);
       const response = await fetch(cssUrl);
       const css = await response.text();
 
       const style = document.createElement('style');
-      style.id = `carbon-visualizer-${this.type}-css`;
+      style.id = styleId;
       style.textContent = css;
       document.head.appendChild(style);
     } catch (error) {
