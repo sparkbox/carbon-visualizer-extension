@@ -39,7 +39,7 @@ function createDirectories() {
 }
 
 // Copy common files
-function copyCommonFiles() {
+function copyCommonFiles(bundlePath) {
   commonFiles.forEach(file => {
     const source = file;
     const chromeDest = path.join(chromeDir, file);
@@ -55,6 +55,22 @@ function copyCommonFiles() {
       fs.copyFileSync(source, firefoxDest);
     }
   });
+
+  // Copy the bundled CSS to the extension's src/styles directory
+  if (bundlePath && fs.existsSync(bundlePath)) {
+    const chromeStylesDir = path.join(chromeDir, 'src/styles');
+    const firefoxStylesDir = path.join(firefoxDir, 'src/styles');
+
+    if (!fs.existsSync(chromeStylesDir)) {
+      fs.mkdirSync(chromeStylesDir, { recursive: true });
+    }
+    if (!fs.existsSync(firefoxStylesDir)) {
+      fs.mkdirSync(firefoxStylesDir, { recursive: true });
+    }
+
+    fs.copyFileSync(bundlePath, path.join(chromeStylesDir, 'core-bundle.css'));
+    fs.copyFileSync(bundlePath, path.join(firefoxStylesDir, 'core-bundle.css'));
+  }
 }
 
 function copyDirectoryRecursive(src, dest) {
@@ -137,13 +153,53 @@ function createZips() {
   });
 }
 
+// Bundle core CSS files
+function bundleCoreCss() {
+  const srcCssDir = 'src/styles';
+  const buildCssDir = path.join(buildDir, 'css');
+  const files = [
+    'tokens/color.css',
+    'tokens/size.css',
+    'tokens/typography.css',
+    'themes/default.css',
+    'generic/typography.css',
+    'core.css'
+  ];
+
+  // Create build/css directory if it doesn't exist
+  if (!fs.existsSync(buildCssDir)) {
+    fs.mkdirSync(buildCssDir, { recursive: true });
+  }
+
+  let bundledCss = '/* Core CSS Bundle for Carbon Visualizer Extension */\n';
+  bundledCss += '/* This file combines all design system CSS files in the correct dependency order */\n\n';
+
+  files.forEach(file => {
+    const filePath = path.join(srcCssDir, file);
+    try {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      bundledCss += `/* ===== ${file} ===== */\n`;
+      bundledCss += content;
+      bundledCss += '\n\n';
+    } catch (error) {
+      console.error(`⚠️  Warning: Could not read CSS file ${filePath}:`, error.message);
+    }
+  });
+
+  const bundleOutputPath = path.join(buildCssDir, 'core-bundle.css');
+  fs.writeFileSync(bundleOutputPath, bundledCss);
+  console.log(`✅ Bundled core CSS: ${bundleOutputPath}`);
+  return bundleOutputPath;
+}
+
 // Main build function
 async function build() {
   try {
     console.log('🚀 Building Carbon Visualizer extension for Chrome and Firefox...');
-    
+
+    const bundlePath = bundleCoreCss();
     createDirectories();
-    copyCommonFiles();
+    copyCommonFiles(bundlePath);
     copyManifests();
     patchFirefoxManifest();
     

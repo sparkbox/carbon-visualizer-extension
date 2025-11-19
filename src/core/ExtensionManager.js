@@ -53,35 +53,24 @@ class ExtensionManager {
   }
 
   async loadCoreCSS() {
-    if (document.getElementById('carbon-visualizer-core-css-bundle')) return;
+    // Check if core CSS bundle is already loaded
+    if (document.getElementById('carbon-visualizer-core-css-bundle')) {
+      return;
+    }
 
     try {
-      const files = [
-        'src/styles/tokens/color.css',
-        'src/styles/tokens/size.css',
-        'src/styles/tokens/typography.css',
-        'src/styles/themes/default.css',
-        'src/styles/generic/typography.css',
-        'src/styles/core.css'
-      ];
+      // Load the bundled core CSS file
+      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core-bundle.css');
+      const response = await fetch(cssUrl);
+      const css = await response.text();
 
-      for (const file of files) {
-        const cssUrl = this.browserAPI.runtime.getURL(file);
-        const response = await fetch(cssUrl);
-        const css = await response.text();
-
-        const style = document.createElement('style');
-        style.textContent = css;
-        document.head.appendChild(style);
-      }
-
-      // Add a marker to indicate core CSS bundle is loaded
-      const marker = document.createElement('style');
-      marker.id = 'carbon-visualizer-core-css-bundle';
-      marker.textContent = '/* Core CSS bundle loaded */';
-      document.head.appendChild(marker);
+      // Create and append the style tag
+      const style = document.createElement('style');
+      style.id = 'carbon-visualizer-core-css-bundle';
+      style.textContent = css;
+      document.head.appendChild(style);
     } catch (error) {
-      console.error(error);
+      console.error('Failed to load core CSS bundle:', error);
     }
   }
 
