@@ -53,19 +53,24 @@ class ExtensionManager {
   }
 
   async loadCoreCSS() {
-    if (document.getElementById('carbon-visualizer-core-css')) return;
+    // Check if core CSS bundle is already loaded
+    if (document.getElementById('carbon-visualizer-core-css-bundle')) {
+      return;
+    }
 
     try {
-      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core.css');
+      // Load the bundled core CSS file
+      const cssUrl = this.browserAPI.runtime.getURL('src/styles/core-bundle.css');
       const response = await fetch(cssUrl);
       const css = await response.text();
 
+      // Create and append the style tag
       const style = document.createElement('style');
-      style.id = 'carbon-visualizer-core-css';
+      style.id = 'carbon-visualizer-core-css-bundle';
       style.textContent = css;
       document.head.appendChild(style);
     } catch (error) {
-      console.error(error);
+      console.error('Failed to load core CSS bundle:', error);
     }
   }
 

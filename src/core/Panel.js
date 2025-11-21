@@ -13,14 +13,12 @@ class Panel {
     const configs = {
       welcome: {
         htmlFile: 'src/panels/welcome/welcome.html',
-        cssFile: 'src/styles/styles.css',
         jsFile: 'src/panels/welcome/welcome.js',
         containerId: 'carbon-visualizer-welcome-panel',
         className: 'cv-panel--welcome'
       },
       results: {
         htmlFile: 'src/panels/results/results.html',
-        cssFile: 'src/panels/results/results.css',
         jsFile: 'src/panels/results/results.js',
         containerId: 'carbon-visualizer-results-panel',
         className: 'cv-panel--results'
@@ -39,29 +37,11 @@ class Panel {
     // Reset visibility state
     this.isVisible = false;
 
-    // Load panel-specific CSS
-    await this.loadPanelCSS();
-
-    // Load and inject HTML
+    // Load and inject HTML (CSS is already bundled and loaded by ExtensionManager)
     await this.loadPanelHTML();
 
     // Load panel-specific JavaScript
     await this.loadPanelJS();
-  }
-
-  async loadPanelCSS() {
-    try {
-      const cssUrl = this.browserAPI.runtime.getURL(this.config.cssFile);
-      const response = await fetch(cssUrl);
-      const css = await response.text();
-
-      const style = document.createElement('style');
-      style.id = `carbon-visualizer-${this.type}-css`;
-      style.textContent = css;
-      document.head.appendChild(style);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   async loadPanelHTML() {
