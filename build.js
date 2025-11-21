@@ -153,7 +153,7 @@ function createZips() {
   });
 }
 
-// Bundle core CSS files
+// Bundle all CSS files (core + panels)
 function bundleCoreCss() {
   const srcCssDir = 'src/styles';
   const buildCssDir = path.join(buildDir, 'css');
@@ -163,7 +163,9 @@ function bundleCoreCss() {
     'tokens/typography.css',
     'themes/default.css',
     'generic/typography.css',
-    'core.css'
+    'core.css',
+    'welcome.css',
+    'results.css'
   ];
 
   // Create build/css directory if it doesn't exist
