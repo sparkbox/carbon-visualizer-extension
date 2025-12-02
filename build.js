@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
+const { bundleCarbonCalculator } = require('./bundle.js');
 
 // Check if archiver is available, if not, provide instructions
 try {
@@ -44,7 +45,7 @@ function copyCommonFiles(bundlePath) {
     const source = file;
     const chromeDest = path.join(chromeDir, file);
     const firefoxDest = path.join(firefoxDir, file);
-    
+
     if (fs.lstatSync(source).isDirectory()) {
       // Copy directory recursively
       copyDirectoryRecursive(source, chromeDest);
@@ -77,12 +78,12 @@ function copyDirectoryRecursive(src, dest) {
   if (!fs.existsSync(dest)) {
     fs.mkdirSync(dest, { recursive: true });
   }
-  
+
   const files = fs.readdirSync(src);
   files.forEach(file => {
     const srcPath = path.join(src, file);
     const destPath = path.join(dest, file);
-    
+
     if (fs.lstatSync(srcPath).isDirectory()) {
       copyDirectoryRecursive(srcPath, destPath);
     } else {
@@ -122,30 +123,30 @@ function createZips() {
   return new Promise((resolve, reject) => {
     const chromeZip = fs.createWriteStream(path.join(buildDir, 'carbon-visualizer-chrome.zip'));
     const firefoxZip = fs.createWriteStream(path.join(buildDir, 'carbon-visualizer-firefox.zip'));
-    
+
     const chromeArchive = archiver('zip', { zlib: { level: 9 } });
     const firefoxArchive = archiver('zip', { zlib: { level: 9 } });
-    
+
     chromeZip.on('close', () => {
       console.log('✅ Chrome extension packaged: build/carbon-visualizer-chrome.zip');
     });
-    
+
     firefoxZip.on('close', () => {
       console.log('✅ Firefox extension packaged: build/carbon-visualizer-firefox.zip');
     });
-    
+
     chromeArchive.on('error', reject);
     firefoxArchive.on('error', reject);
-    
+
     chromeArchive.pipe(chromeZip);
     firefoxArchive.pipe(firefoxZip);
-    
+
     chromeArchive.directory(chromeDir, false);
     firefoxArchive.directory(firefoxDir, false);
-    
+
     chromeArchive.finalize();
     firefoxArchive.finalize();
-    
+
     Promise.all([
       new Promise(resolve => chromeArchive.on('end', resolve)),
       new Promise(resolve => firefoxArchive.on('end', resolve))
@@ -200,13 +201,15 @@ async function build() {
     console.log('🚀 Building Carbon Visualizer extension for Chrome and Firefox...');
 
     const bundlePath = bundleCoreCss();
+    await bundleCarbonCalculator();
+
     createDirectories();
     copyCommonFiles(bundlePath);
     copyManifests();
     patchFirefoxManifest();
-    
+
     await createZips();
-    
+
     console.log('\n🎉 Build complete!');
     console.log('\n📦 Extension packages created:');
     console.log('   Chrome: build/carbon-visualizer-chrome.zip');
@@ -214,7 +217,7 @@ async function build() {
     console.log('\n📋 Installation instructions:');
     console.log('   Chrome: Load unpacked from build/chrome/');
     console.log('   Firefox: Load temporary add-on from build/firefox/');
-    
+
   } catch (error) {
     console.error('❌ Build failed:', error);
     process.exit(1);
