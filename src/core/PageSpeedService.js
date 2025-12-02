@@ -3,8 +3,13 @@
  */
 
 /**
- * Make Google PageSpeed Insights API request and return data.
+ * Proxy URL that will make the actual Page Speed request and return data.
  * The requests are made securely from a serverless function, to keep the API key private.
+ */
+const PAGE_SPEED_API_URL = "https://carbon-calculator-proxy.netlify.app/.netlify/functions/page-speed";
+
+/**
+ * Make Google PageSpeed Insights API request and return data.
  * 
  * @param {string} urlToMeasure - URL to measure the performance of.
  * @param {bool} logDebug - Whether to log results of request to the console for debugging.
@@ -12,7 +17,7 @@
  */
 export const makePageSpeedAPIRequest = async (urlToMeasure, logDebug = false) => {
     // Proxy URL using serverless function that will return data.
-    const proxyRequestUrl = `https://carbon-calculator-proxy.netlify.app/.netlify/functions/page-speed?url=${encodeURIComponent(urlToMeasure)}`;
+    const proxyRequestUrl = `${PAGE_SPEED_API_URL}?url=${encodeURIComponent(urlToMeasure)}`;
 
     // Debug: log intro to console.
     if (logDebug) {

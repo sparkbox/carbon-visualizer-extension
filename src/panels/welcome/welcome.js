@@ -10,20 +10,23 @@ export function initializePanel(panelType, data) {
     return;
   }
   
-  // Get analyze button from within the container
+  // Get analyze button from within the container.
   const analyzeBtn = container.querySelector('#analyze-page-btn');
   const analyzeErrorMessage = container.querySelector('#analyze-page-error');
   
-  // Check if button exists before adding event listener
+  // Check if button exists before doing more with it.
   if (!analyzeBtn) {
     return;
   }
+
+  // Store original/default button text.
+  const analyzeBtnText = analyzeBtn.textContent;
   
   // Event listener for analyze button
   analyzeBtn.addEventListener('click', async () => {
     // For now, just show a simple message within the button.
     analyzeBtn.disabled = true;
-    analyzeBtn.textContent = 'Test: Making request and logging to console...';
+    analyzeBtn.textContent = 'Analyzing page...';
     if (analyzeErrorMessage) {
       analyzeErrorMessage.textContent = '';
     }
@@ -39,7 +42,7 @@ export function initializePanel(panelType, data) {
       }
 
       // Reset button back to usable state.
-      analyzeBtn.textContent = 'Analyze This Page';
+      analyzeBtn.textContent = analyzeBtnText;
       analyzeBtn.disabled = false;
     } else {
       // Success. Open results panel.
