@@ -6,3 +6,6 @@ build/
 
 # Binary files
 .DS_Store
+
+# Bundled files
+*.bundle.js
