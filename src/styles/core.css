@@ -1,10 +1,10 @@
 /* Core styles for Carbon Visualizer extension */
 
 :where(#carbon-visualizer-welcome-panel,
-#carbon-visualizer-welcome-panel *,
-#carbon-visualizer-welcome-panel *::before,
-#carbon-visualizer-welcome-panel *::after) {
-  all: initial;
+  #carbon-visualizer-welcome-panel *,
+  #carbon-visualizer-welcome-panel *::before,
+  #carbon-visualizer-welcome-panel *::after) {
+  all: revert;
 }
 
 /* TODO: these green values were generated using https://oklchroma.utilitybend.com/ and are not part of any design specs.
@@ -29,6 +29,16 @@
   /* neutrals */
   --cv-black: hsl(0deg 0% 0%);
   --cv-white: hsl(0deg 0% 100%);
+
+  font-family: var(--cv-font-family-sans);
+
+  :where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dt, figure, blockquote) {
+    line-height: calc(1em + 0.5rem);
+
+    &:not(:first-child) {
+      margin-block-start: 1em;
+    }
+  }
 }
 
 .cv-panel {
