@@ -43,16 +43,28 @@
 }
 
 /* Panel header */
-.cv-panel__header {
-  padding: 1rem 1.5rem 0.5rem;
-  border-bottom: 1px solid var(--cv-white);
+.cv-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  /* TODO: The `border-bottom` color is equal to `--cv-color-gray-50` and should be replaced with the variable when implemented */
+  border-bottom: 1px solid oklch(from oklch(50.0% 0.000 0) 50% calc(0 + (sin(0.6 * pi) * c)) h);
+  background-color: var(--cv-white);
 }
 
-.cv-panel__title {
+.cv-header__logo {
+  --header-logo-dimensions: 2rem;
+
+  width: var(--header-logo-dimensions);
+  height: var(--header-logo-dimensions);
+}
+
+.cv-header__title {
   margin: 0;
   font-size: 1.125rem;
   font-weight: 600;
-  color: var(--cv-white);
+  color: var(--cv-black);
 }
 
 /* Panel content */
