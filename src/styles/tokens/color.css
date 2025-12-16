@@ -1,4 +1,4 @@
-.cv {
+#carbon-visualizer-welcome-panel {
   --cv-color-pink: oklch(50.0% 0.200 345);
   --cv-color-pink-base: 0.05;
   --cv-color-pink-10: oklch(from var(--cv-color-pink) 10% calc(var(--cv-color-pink-base) + (sin(1.0 * pi) * c)) h);
