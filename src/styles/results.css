@@ -24,3 +24,27 @@
   color: var(--cv-white);
   line-height: 1.5;
 }
+
+.cv-results__sections {
+  text-align: start;
+  margin-bottom: 2.0rem;
+}
+
+.cv-results__group {
+  padding: 1.0rem;
+  border: 1px solid currentColor;
+  border-inline-start-width: 4px;
+  border-radius: 1.0rem;
+}
+
+.cv-results__group > *:first-child {
+  margin-block-start: 0;
+}
+
+.cv-results__group > *:last-child {
+  margin-block-end: 0;
+}
+
+.cv-results__details summary {
+  margin-block-end: 0.5rem;
+}
