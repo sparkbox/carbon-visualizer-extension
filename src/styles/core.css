@@ -137,6 +137,20 @@
     transform: none;
   }
 
+  /* Loader */
+  .cv-loader {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem;
+    flex-direction: column-reverse;
+    align-items: center;
+    color: var(--cv-color-gray-100);
+  }
+
+  .cv-loader__progress {
+    accent-color: var(--cv-color-gray-20);
+  }
+
   /* Responsive design */
   @media (max-width: 480px) {
     .cv-panel {
