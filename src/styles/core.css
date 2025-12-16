@@ -1,9 +1,7 @@
 /* Core styles for Carbon Visualizer extension */
 
-:where(#carbon-visualizer-welcome-panel,
-  #carbon-visualizer-welcome-panel *,
-  #carbon-visualizer-welcome-panel *::before,
-  #carbon-visualizer-welcome-panel *::after) {
+#carbon-visualizer-welcome-panel,
+.cv-panel :where(*, *::before, *::after) {
   all: revert;
 }
 
