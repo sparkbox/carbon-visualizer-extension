@@ -1,4 +1,4 @@
-#carbon-visualizer-welcome-panel {
+.cv-panel {
   * {
     max-inline-size: var(--cv-max-line-length);
   }
