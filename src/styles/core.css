@@ -1,6 +1,6 @@
 /* Core styles for Carbon Visualizer extension */
 
-#carbon-visualizer-welcome-panel,
+.cv-panel,
 .cv-panel :where(*, *::before, *::after):not(svg *) {
   all: revert;
 }
@@ -9,7 +9,7 @@
  * The custom properties are used in this file and welcome.css.
  * Feel free to remove them in favor of our own color palette!
  */
-#carbon-visualizer-welcome-panel {
+.cv-panel {
   /* greens */
   --cv-primary-green: hsl(114deg 64.9% 32.0%);
   --cv-primary-green-base: 0.05;

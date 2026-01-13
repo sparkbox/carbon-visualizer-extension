@@ -1,4 +1,4 @@
-#carbon-visualizer-welcome-panel {
+.cv-panel {
   /* somewhat randomly selected system font stacks from https://modernfontstacks.com/ (replace as needed) */
   --cv-font-family-display: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
   --cv-font-family-sans: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
