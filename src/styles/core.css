@@ -1,7 +1,7 @@
 /* Core styles for Carbon Visualizer extension */
 
 #carbon-visualizer-welcome-panel,
-.cv-panel :where(*, *::before, *::after) {
+.cv-panel :where(*, *::before, *::after):not(svg *) {
   all: revert;
 }
 
