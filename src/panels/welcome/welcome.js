@@ -1,19 +1,20 @@
 // Welcome panel JavaScript
-import { extensionManager }  from "../../core/ExtensionManager.js";
+import { extensionManager } from "../../core/ExtensionManager.js";
 import { makePageSpeedAPIRequest } from "../../core/PageSpeedService.js";
+import { calculateEmissionsFromPageSpeedResults } from "../../core/CarbonCalculator.bundle.js";
 
 export function initializePanel(panelType, data) {
   // Get the container element
   const container = data.container;
-  
+
   if (!container) {
     return;
   }
-  
+
   // Get analyze button from within the container.
   const analyzeBtn = container.querySelector('#analyze-page-btn');
   const analyzeErrorMessage = container.querySelector('#analyze-page-error');
-  
+
   // Check if button exists before doing more with it.
   if (!analyzeBtn) {
     return;
@@ -21,7 +22,7 @@ export function initializePanel(panelType, data) {
 
   // Store original/default button text.
   const analyzeBtnText = analyzeBtn.textContent;
-  
+
   // Event listener for analyze button
   analyzeBtn.addEventListener('click', async () => {
     // For now, just show a simple message within the button.
@@ -45,6 +46,8 @@ export function initializePanel(panelType, data) {
       analyzeBtn.textContent = analyzeBtnText;
       analyzeBtn.disabled = false;
     } else {
+      const { bytesTransferred, totalCO2 } = calculateEmissionsFromPageSpeedResults(pageSpeedResults);
+      console.log('Emissions Calculation Results:', { bytesTransferred, totalCO2 });
       // Success. Open results panel.
       await extensionManager.openPanel('results');
     }
