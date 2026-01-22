@@ -2,6 +2,7 @@
 import { extensionManager } from "../../core/ExtensionManager.js";
 import { makePageSpeedAPIRequest } from "../../core/PageSpeedService.js";
 import { calculateEmissionsFromPageSpeedResults } from "../../core/CarbonCalculator.bundle.js";
+import { getUnusedJavaScriptMetrics } from "../../core/AuditMetrics.js";
 
 export function initializePanel(panelType, data) {
   // Get the container element
@@ -48,6 +49,9 @@ export function initializePanel(panelType, data) {
     } else {
       const { bytesTransferred, totalCO2 } = calculateEmissionsFromPageSpeedResults(pageSpeedResults);
       console.log('Emissions Calculation Results:', { bytesTransferred, totalCO2 });
+
+      const unusedJavaScript = getUnusedJavaScriptMetrics(pageSpeedResults);
+      console.log('Unused JavaScript Metrics:', unusedJavaScript);
       // Success. Open results panel.
       await extensionManager.openPanel('results');
     }
