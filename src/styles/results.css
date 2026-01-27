@@ -48,4 +48,49 @@
   .cv-results__details summary {
     margin-block-end: 0.5rem;
   }
+
+  /* Summary Component */
+  .cv-summary {
+    width: 100%;
+  }
+
+  .cv-summary__grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    background-color: var(--cv-primary-green-90);
+    border-radius: 0.5rem;
+    align-items: center;
+  }
+
+  .cv-summary__totals {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cv-summary__totals--userSite .cv-summary__totals--content:first-child {
+    font-weight: 700;
+    color: var(--cv-primary-green-30);
+    line-height: 1.2;
+  }
+
+  .cv-summary__totals--userSite .cv-summary__totals--content:last-child {
+    font-weight: 500;
+    color: var(--cv-primary-green-40);
+    line-height: 1.4;
+  }
+
+  .cv-summary__totals--comparison .cv-summary__totals--content:first-child {
+    font-weight: 600;
+    color: var(--cv-primary-green-30);
+    line-height: 1.4;
+  }
+
+  .cv-summary__totals--comparison .cv-summary__totals--content:last-child {
+    font-weight: 500;
+    color: var(--cv-primary-green-40);
+    line-height: 1.5;
+  }
 }
