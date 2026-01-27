@@ -2,6 +2,7 @@
 import { extensionManager } from "../../core/ExtensionManager.js";
 import { makePageSpeedAPIRequest } from "../../core/PageSpeedService.js";
 import { calculateEmissionsFromPageSpeedResults } from "../../core/CarbonCalculator.bundle.js";
+import { createLoader } from "../../components/Loader.js";
 
 export function initializePanel(panelType, data) {
   // Get the container element
@@ -31,6 +32,11 @@ export function initializePanel(panelType, data) {
     if (analyzeErrorMessage) {
       analyzeErrorMessage.textContent = '';
     }
+
+    // ! Drop below
+    const loader = createLoader();
+    analyzeBtn.insertAdjacentElement('beforebegin', loader);
+    // ! Drop above
 
     // Make API request.
     const currentPageURL = window.location.toString();
