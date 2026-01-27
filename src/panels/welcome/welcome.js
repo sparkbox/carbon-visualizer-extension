@@ -3,6 +3,12 @@ import { extensionManager } from "../../core/ExtensionManager.js";
 import { makePageSpeedAPIRequest } from "../../core/PageSpeedService.js";
 import { calculateEmissionsFromPageSpeedResults } from "../../core/CarbonCalculator.bundle.js";
 
+const getUnminifiedJavascript = (pageSpeedResults) => {
+  const { score, overallSavingsBytes, overallSavingsMs } =
+    pageSpeedResults.lighthouseResult.audits['unminified-javascript'];
+  return { score, overallSavingsBytes, overallSavingsMs };
+};
+
 export function initializePanel(panelType, data) {
   // Get the container element
   const container = data.container;
@@ -35,6 +41,7 @@ export function initializePanel(panelType, data) {
     // Make API request.
     const currentPageURL = window.location.toString();
     const pageSpeedResults = await makePageSpeedAPIRequest(currentPageURL, true);
+    const unminifiedJavascript = getUnminifiedJavascript(pageSpeedResults);
 
     // Display error message in UI if there was an error or nothing was returned.
     if (!pageSpeedResults || Object.keys(pageSpeedResults).length === 0) {
@@ -47,9 +54,13 @@ export function initializePanel(panelType, data) {
       analyzeBtn.disabled = false;
     } else {
       const { bytesTransferred, totalCO2 } = calculateEmissionsFromPageSpeedResults(pageSpeedResults);
-      console.log('Emissions Calculation Results:', { bytesTransferred, totalCO2 });
+      const emissionsCalculationResults = { bytesTransferred, totalCO2 };
+
       // Success. Open results panel.
-      await extensionManager.openPanel('results');
+      await extensionManager.openPanel('results', {
+        unminifiedJavascript,
+        emissionsCalculationResults,
+      });
     }
   });
 }
