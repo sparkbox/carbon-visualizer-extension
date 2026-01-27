@@ -48,8 +48,9 @@ export function initializePanel(panelType, data) {
     } else {
       const { bytesTransferred, totalCO2 } = calculateEmissionsFromPageSpeedResults(pageSpeedResults);
       console.log('Emissions Calculation Results:', { bytesTransferred, totalCO2 });
-      // Success. Open results panel.
-      await extensionManager.openPanel('results');
+
+      // Success. Open results panel and pass along our data.
+      await extensionManager.openPanel('results', { pageSpeedResults });
     }
   });
 }
